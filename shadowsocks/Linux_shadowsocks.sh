@@ -12,6 +12,7 @@ clear
 echo
 echo "#############################################################"
 echo "# One click Install Shadowsocks-Python server               #"
+echo "#              Author: Kionf <www.kionf.com>                #"
 echo "#############################################################"
 echo
 
