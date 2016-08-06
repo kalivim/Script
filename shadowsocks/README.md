@@ -1,6 +1,6 @@
 # 此脚本为搭建ss服务器脚本
 
-> 支持 `Debain 7+` `Centos 6+` `Ubuntu 14+` 
+> 支持 `Debain 7+` `Centos 6+` `Ubuntu 12+` 
   
 > 只需运行如下命令即可
 
