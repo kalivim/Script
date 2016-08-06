@@ -4,8 +4,10 @@
   
 > 只需运行如下命令即可
 
-    wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh
+```bash
+wget --no-check-certificate https://github.com/kalivim/Linux_shell/raw/master/shadowsocks/Linux_shadowsocks.sh
     
-    chmod +x shadowsocks.sh
+chmod +x shadowsocks.sh
     
-    ./shadowsocks.sh 2>&1 | tee shadowsocks.log
+./shadowsocks.sh 2>&1 | tee shadowsocks.log
+```
