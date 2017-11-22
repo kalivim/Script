@@ -7,7 +7,7 @@
 ```bash
 wget --no-check-certificate https://github.com/kalivim/Linux_shell/raw/master/shadowsocks/Linux_shadowsocks.sh
     
-chmod +x shadowsocks.sh
+chmod +x Linux_shadowsocks.sh
     
-./shadowsocks.sh 2>&1 | tee shadowsocks.log
+./Linux_shadowsocks.sh 2>&1 | tee shadowsocks.log
 ```
