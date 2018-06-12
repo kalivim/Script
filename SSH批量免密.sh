@@ -1,4 +1,13 @@
 #!/bin/sh
+#
+#  Author: Kionf
+#
+#  Usage: 创建需要免密的机器 写入hosts文件
+#  hosts文件格式:
+#  1.1.1.1
+#  2.2.2.2
+#  3.3.3.3
+#
 
 yum -y install expect
 
@@ -15,4 +24,4 @@ while read line;do
 	expect eof
 EOF
 
-done < /script/hosts
+done < hosts
