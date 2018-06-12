@@ -15,22 +15,13 @@ import sys
 PATH = "/opt/op/tomcat"
 
 shell_script = "manage.sh"
-bucket = "https://cluster-pkg.oss-cn-beijing.aliyuncs.com/tomcat_app/"
+bucket = "https://pkg.war.com/"
 
 config_data = {
     # 应用名: [ServerPort, ConnectPort, AJPPort, RedirectPort, ]
     'Application': ['8201', '8101', '8301', '8401', 'BaseApplication.war'],
     'BaseNotify_Service': ['8202', '8102', '8302', '8402', 'BaseNotify_Service.war'],
     'BaseUserCenter_Service': ['8203', '8103', '8303', '8403', 'BaseUserCenter_Service.war'],
-    'BukaApi': ['8204', '8104', '8304', '8404', 'buka_api.war'],
-    'BaseDocumentQueue': ['8205', '8105', '8305', '8405', 'BaseDocumentQueue.war'],
-    'Dong': ['8206', '8106', '8306', '8406', 'dong-1.0-SNAPSHOT.war'],
-    'Statistics': ['8207', '8107', '8307', '8407', 'statistics_v5.war'],
-    'UserCenterAuth': ['8208', '8108', '8308', '8408', 'user_center_auth.war'],
-    'UserMember': ['8209', '8109', '8309', '8409', 'user_member.war'],
-    'Users': ['8210', '8110', '8310', '8410', 'users.war'],
-    'BaseDocument': ['8211', '8111', '8311', '8411', 'BaseDocument.war'],
-    'DoubleTeacher': ['8212', '8112', '8312', '8412', 'double_teacher.war'],
 }
 
 
