@@ -15,7 +15,7 @@ import sys
 PATH = "/opt/op/tomcat"
 
 shell_script = "manage.sh"
-bucket = "https://pkg.war.com/"
+bucket = "https://pkg.com/tomcat_app/"
 
 config_data = {
     # 应用名: [ServerPort, ConnectPort, AJPPort, RedirectPort, ]
@@ -89,6 +89,10 @@ class TomcatAppsManage:
     def manage(self, operate):
         os.system('sh %s %s' % (self.manage_shell_file, operate))
 
+    def restart(self):
+        self.manage("stop")
+        self.manage("start")
+
     def start(self):
         self.manage("start")
 
@@ -127,12 +131,16 @@ def dash_board(apps, operate):
             "status": app_obj.status_app,
             "start": app_obj.start,
             "stop": app_obj.stop,
+            "restart": app_obj.restart,
             "upgrade": app_obj.upgrade,
             "log": app_obj.log,
             "lock": app_obj.lock_config_file,
             "unlock": app_obj.unlock_config_file,
         }
-        main_dict[operate]()
+        try:
+            main_dict[operate]()
+        except KeyError as e:
+            customize_print(help_msg)
 
 
 help_msg = """
@@ -145,7 +153,7 @@ help_msg = """
     unlock      解锁配置文件
     init        配置tomcat监听端口
     shell       配置webapp控制脚本
-    status，start，log，upgrade，stop 应用操作
+    status，start，restart, log，upgrade，stop 应用操作
 """
 
 
