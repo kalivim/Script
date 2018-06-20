@@ -55,6 +55,9 @@ update() {
     wget ${war_url} -O ${download_war_file} > /dev/null 2>&1
     if [ $? -eq 0 ];then
         cd ${CATALINA_BASE}/webapps/*/; unzip -q -o ${download_war_file} >/dev/null 2>&1
+    else
+        echo -e "\033[91m Download pkg error \033[0m"
+        exit 1
     fi
 }
 
