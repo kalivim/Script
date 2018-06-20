@@ -54,7 +54,7 @@ update() {
     echo "下载文件"
     wget ${war_url} -O ${download_war_file} > /dev/null 2>&1
     if [ $? -eq 0 ];then
-        cd ${CATALINA_BASE}/webapps/*/; unzip -q -o ${download_war_file}
+        cd ${CATALINA_BASE}/webapps/*/; unzip -q -o ${download_war_file} >/dev/null 2>&1
     fi
 }
 
