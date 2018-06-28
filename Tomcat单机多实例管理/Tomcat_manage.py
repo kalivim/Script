@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2018/5/23 15:18
 # @Author  : Kionf
-# @FileName: bitch_project.py
+# @FileName: tomcat_manager.py
 #
 #   初始配置并管理单例tomcat多应用
 #
@@ -10,12 +10,14 @@
 import os
 import subprocess
 import sys
+import shutil
 
 # PATH = os.getcwd()
 PATH = "/opt/op/tomcat"
 
-shell_script = "manage.sh"
-bucket = "https://pkg.com/tomcat_app/"
+shell_script = os.path.join(PATH, "manage.sh")
+INIT_FILES = os.path.join(PATH, "INIT_APPS_FILE")
+bucket = "https://oss.aliyuncs.com/tomcat_app/"
 
 config_data = {
     # 应用名: [ServerPort, ConnectPort, AJPPort, RedirectPort, ]
@@ -43,7 +45,17 @@ class TomcatAppsManage:
         self.server_port, self.conn_port, self.ajp_port, self.redirect_port, self.app_war_name = self.app_config
         self.app_download_url = bucket + self.app_war_name
         self.config_file = os.path.join(PATH, self.name, 'conf/server.xml')
-        self.webapp_config_dir = os.path.join(PATH, self.name)
+        self.webapp_dir = os.path.join(PATH, self.name)
+
+    def create_app(self):
+        """
+        创建app
+        :return:
+        """
+        if not os.path.exists(self.webapp_dir):
+            customize_print("创建APP: %s" % self.name)
+            shutil.copytree(INIT_FILES, self.webapp_dir)
+            os.mkdir(os.path.join(self.webapp_dir, "webapps", self.name.lower()))
 
     def config_app_port(self):
         customize_print("正在修改APP：%s 配置" % self.name)
@@ -59,8 +71,8 @@ class TomcatAppsManage:
             os.system(change_port[port])
 
     def config_app_manage_shell(self):
-        customize_print("添加管理脚本")
-        copy_shell_script = 'cp -f ' + os.path.join(PATH, shell_script) + ' ' + self.manage_shell_file
+        customize_print("%s 添加管理脚本" % self.name)
+        copy_shell_script = 'cp -f ' + shell_script + ' ' + self.manage_shell_file
         os.system(copy_shell_script)
         config_script_app_name = "sed -i 's/app=/app=\"" + self.name + "\"/' " + self.manage_shell_file
         os.system(config_script_app_name)
@@ -88,6 +100,13 @@ class TomcatAppsManage:
 
     def manage(self, operate):
         os.system('sh %s %s' % (self.manage_shell_file, operate))
+        
+    def init(self):
+        self.create_app()
+        self.config_app_port()
+        self.config_app_manage_shell()
+        self.manage("upgrade")
+        self.manage("stop")
 
     def restart(self):
         self.manage("stop")
@@ -107,12 +126,12 @@ class TomcatAppsManage:
         self.manage("upgrade")
 
     def lock_config_file(self):
-        cmd = 'find ' + self.webapp_config_dir + ' -name db*properties -o -name config_base_*|xargs chattr +i >/dev/null 2>&1'
+        cmd = 'find ' + self.webapp_dir + ' -name db*properties -o -name config_base_*|xargs chattr +i >/dev/null 2>&1'
         customize_print("锁配置文件", 2)
         os.system(cmd)
 
     def unlock_config_file(self):
-        cmd = 'find ' + self.webapp_config_dir + ' -name db*properties -o -name config_base_*|xargs chattr -i >/dev/null 2>&1'
+        cmd = 'find ' + self.webapp_dir + ' -name db*properties -o -name config_base_*|xargs chattr -i >/dev/null 2>&1'
         customize_print("解锁配置文件", 2)
         os.system(cmd)
 
@@ -126,7 +145,7 @@ def dash_board(apps, operate):
     for app in apps:
         app_obj = TomcatAppsManage(app)
         main_dict = {
-            "init": app_obj.config_app_port,
+            "init": app_obj.init,
             "shell": app_obj.config_app_manage_shell,
             "status": app_obj.status_app,
             "start": app_obj.start,
