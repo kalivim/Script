@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sf_dir=/data/software
+sf_dir=/opt/op
 
 jdk_name=jdk-8u112-linux-x64.tar.gz
 jdk_url=http://cluster-1251231552.cosbj.myqcloud.com/${jdk_name}
