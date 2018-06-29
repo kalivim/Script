@@ -22,7 +22,7 @@ JDK() {
 	Check "下载JDK-1.8.112"
 	tar xvf ${sf_dir}/${jdk_name} -C ${sf_dir}/ > /dev/null 2>&1
 	cat >>/etc/profile <<-EOF
-	export JAVA_HOME=/data/software/jdk1.8.0_112
+	export JAVA_HOME=${sf_dir}/jdk1.8.0_112
 	export PATH=\$JAVA_HOME/bin:\$PATH
 	export CLASSPATH=.:\$JAVA_HOME/lib/dt.jar:\$JAVA_HOME/lib/tools.jar
 	EOF
