@@ -3,7 +3,7 @@
 sf_dir=/data/software
 
 jdk_name=jdk-8u112-linux-x64.tar.gz
-jdk_url=http://mirrors.linuxeye.com/jdk/${jdk_name}
+jdk_url=http://cluster-1251231552.cosbj.myqcloud.com/${jdk_name}
 
 echo -e "\033[32;1m [+] 软件包安装下载目录：${sf_dir} \033[0m"
 
